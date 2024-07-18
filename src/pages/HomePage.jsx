@@ -1,17 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import {
    useLocalStorage,
    ACCESS_TOKEN,
    REFRESH_TOKEN,
 } from "../utils/useLocalStorage";
+import { useDispatch, useSelector } from "react-redux";
 
 const HomePage = () => {
    const navigate = useNavigate();
 
    const { getItem: getAccessToken } = useLocalStorage(ACCESS_TOKEN);
    const { getItem: getRefreshToken } = useLocalStorage(REFRESH_TOKEN);
+
+   const user = useSelector((state) => state.user);
 
    // const fetchAuthenticate = async () => {
    //    try {
@@ -39,7 +41,7 @@ const HomePage = () => {
 
    return (
       <div>
-         <h1>This is home page</h1>
+         <h1>This is home page {user.username}</h1>
       </div>
    );
 };

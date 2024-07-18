@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import userReducer from "../reduer/user";
-import tokenReducer from "../reduer/tokens";
+import userReducer from "../reduer/reducer_user";
+import tokenReducer from "../reduer/reducer_tokens";
 
 const bigReducer = combineReducers({
    user: userReducer,

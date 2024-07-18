@@ -5,6 +5,9 @@ import {
    REFRESH_TOKEN,
 } from "../utils/useLocalStorage";
 import { useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import { useDispatch } from "react-redux";
+import { getUserData } from "../redux/action/action_user";
 
 const LoginPage = () => {
    const [loginData, setLoginData] = useState({
@@ -12,10 +15,14 @@ const LoginPage = () => {
       password: "",
    });
 
+   const [userData, setUserData] = useState(null);
+
    const navigate = useNavigate();
 
    const { setItem: saveAcessToken } = useLocalStorage(ACCESS_TOKEN);
    const { setItem: saveRefreshToken } = useLocalStorage(REFRESH_TOKEN);
+
+   const dispatch = useDispatch();
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -35,8 +42,14 @@ const LoginPage = () => {
             const data = await response.json();
             console.log("this is token: ", data);
 
+            // saves access token and refresh token into localStorage
             saveAcessToken(data.access);
             saveRefreshToken(data.refresh);
+
+            const decode = jwtDecode(data.access);
+            console.log("this is decoded data: ", decode);
+
+            dispatch(getUserData(decode));
 
             navigate("/");
          } else {
