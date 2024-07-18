@@ -1,10 +1,21 @@
 import React, { useState } from "react";
+import {
+   useLocalStorage,
+   ACCESS_TOKEN,
+   REFRESH_TOKEN,
+} from "../utils/useLocalStorage";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
    const [loginData, setLoginData] = useState({
       username: "",
       password: "",
    });
+
+   const navigate = useNavigate();
+
+   const { setItem: saveAcessToken } = useLocalStorage(ACCESS_TOKEN);
+   const { setItem: saveRefreshToken } = useLocalStorage(REFRESH_TOKEN);
 
    const handleSubmit = async (e) => {
       e.preventDefault();
@@ -23,6 +34,11 @@ const LoginPage = () => {
          if (response.ok) {
             const data = await response.json();
             console.log("this is token: ", data);
+
+            saveAcessToken(data.access);
+            saveRefreshToken(data.refresh);
+
+            navigate("/");
          } else {
             throw new Error("There was a login problem");
          }
