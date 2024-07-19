@@ -70,6 +70,9 @@ const LoginPage = () => {
 
    return (
       <div>
+         <h1 className="text-6xl font-italic underline text-red-500">
+            Hello world!
+         </h1>
          <form onSubmit={handleSubmit}>
             <input
                type="text"
@@ -85,7 +88,7 @@ const LoginPage = () => {
                onChange={handleChange}
                placeholder="Enter Password"
             />
-            <input type="submit" value="Login" />
+            <input className="rounded-none" type="submit" value="Login" />
          </form>
       </div>
    );

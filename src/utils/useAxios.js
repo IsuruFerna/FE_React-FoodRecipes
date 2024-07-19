@@ -1,31 +1,23 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import dayjs from "dayjs";
-import { useContext } from "react";
 import {
    ACCESS_TOKEN,
    REFRESH_TOKEN,
    useLocalStorage,
 } from "./useLocalStorage";
 import { useDispatch } from "react-redux";
-import { removeUserData, setReduxUserData } from "../redux/action/action_user";
-import { useNavigate } from "react-router-dom";
+import { setReduxUserData } from "../redux/action/action_user";
 
 const baseURL = process.env.REACT_APP_BE_URL;
 
 const useAxios = () => {
    const dispatch = useDispatch();
-   const navigate = useNavigate();
-   const {
-      setItem: saveAcessToken,
-      getItem: getAcessToken,
-      removeItem: removeAccessToken,
-   } = useLocalStorage(ACCESS_TOKEN);
-   const {
-      setItem: saveRefreshToken,
-      getItem: getRefreshToken,
-      removeItem: removeRefreshToken,
-   } = useLocalStorage(REFRESH_TOKEN);
+
+   const { setItem: saveAcessToken, getItem: getAcessToken } =
+      useLocalStorage(ACCESS_TOKEN);
+   const { setItem: saveRefreshToken, getItem: getRefreshToken } =
+      useLocalStorage(REFRESH_TOKEN);
 
    const accessToken = getAcessToken();
    const refreshToken = getRefreshToken();

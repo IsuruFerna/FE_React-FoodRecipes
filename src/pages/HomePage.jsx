@@ -8,6 +8,11 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { removeUserData } from "../redux/action/action_user";
 import useAxios from "../utils/useAxios";
+import MealCard from "../components/MealCard";
+
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 const HomePage = () => {
    const navigate = useNavigate();
@@ -29,15 +34,26 @@ const HomePage = () => {
    };
 
    const [mealData, setMealData] = useState([]);
+   const [paginatorData, setPaginatorData] = useState({
+      count: null,
+      next: null,
+      previous: null,
+   });
 
    const getMeals = async () => {
       try {
          let response = await api.get("/recipes/");
 
          if (response.status === 200) {
-            setMealData(response.data.data);
+            const data = response.data;
+            setMealData(data.results);
+            setPaginatorData({
+               count: data.count,
+               next: data.next,
+               previous: data.previous,
+            });
 
-            console.log("this is data: ", mealData);
+            console.log("this is data: ", response.data);
          }
       } catch (error) {
          console.log(error);
@@ -63,17 +79,27 @@ const HomePage = () => {
    }, []);
 
    return (
-      <div>
-         <h1>This is home page {user.username}</h1>
-         <button onClick={getMeals}>Get meals</button>
+      <Container>
+         <Row>
+            <h1>This is home page {user.username}</h1>
+            <button onClick={getMeals}>Get meals</button>
+         </Row>
 
-         <ul>
-            {mealData.length > 0 &&
+         <Row>
+            {mealData &&
                mealData.map((meal) => (
-                  <li key={meal.idMeal}>{meal.strMeal}</li>
+                  // <li key={meal.idMeal}>{meal.strMeal}</li>
+                  <Col
+                     className="mb-3 d-flex justify-content-center"
+                     sm={6}
+                     md={4}
+                     lg={3}
+                  >
+                     <MealCard key={meal.idMeal} meal={meal} />
+                  </Col>
                ))}
-         </ul>
-      </div>
+         </Row>
+      </Container>
    );
 };
 
