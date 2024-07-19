@@ -13,12 +13,16 @@ const Header = () => {
    const dispatch = useDispatch();
    const [loading, setLoading] = useState(true);
 
-   const { removeItem: removeAccessToken } = useLocalStorage(ACCESS_TOKEN);
-   const { removeItem: removeRefreshToken } = useLocalStorage(REFRESH_TOKEN);
-   const { getItem: getRefreshToken } = useLocalStorage(REFRESH_TOKEN);
-   const { getItem: getAcessToken } = useLocalStorage(ACCESS_TOKEN);
-   const { setItem: saveAcessToken } = useLocalStorage(ACCESS_TOKEN);
-   const { setItem: saveRefreshToken } = useLocalStorage(REFRESH_TOKEN);
+   const {
+      setItem: saveAcessToken,
+      getItem: getAcessToken,
+      removeItem: removeAccessToken,
+   } = useLocalStorage(ACCESS_TOKEN);
+   const {
+      setItem: saveRefreshToken,
+      getItem: getRefreshToken,
+      removeItem: removeRefreshToken,
+   } = useLocalStorage(REFRESH_TOKEN);
 
    const refreshToken = getRefreshToken();
    const accessToken = getAcessToken();

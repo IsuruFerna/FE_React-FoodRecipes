@@ -7,7 +7,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useDispatch } from "react-redux";
-import { getUserData } from "../redux/action/action_user";
+import { setReduxUserData } from "../redux/action/action_user";
 
 const LoginPage = () => {
    const [loginData, setLoginData] = useState({
@@ -49,7 +49,7 @@ const LoginPage = () => {
             const decode = jwtDecode(data.access);
             console.log("this is decoded data: ", decode);
 
-            dispatch(getUserData(decode));
+            dispatch(setReduxUserData(decode));
 
             navigate("/");
          } else {
